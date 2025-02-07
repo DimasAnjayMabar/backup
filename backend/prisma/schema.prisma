@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId   Int      @id @default(autoincrement())
+  username String   @unique
+  password String
+  name     String
+  email    String   @unique
+  phone    String   @unique
+  token    String?   @unique
+  profilePicture String?
+  isActive Boolean  @default(true)
+  deletedAt DateTime?
+  history  UserHistory[]  // One-to-many relationship with UserHistory
+
+  @@map("users")
+  @@index([email])
+  @@index([username])
+}
+
+model UserHistory {
+  userHistoryId Int      @id @default(autoincrement())  // Primary key for history entries
+  updatedAt     DateTime @default(now())                // Timestamp of the change
+  description   String   // Description of the change/action
+  userId        Int      // Foreign key to User
+  user          User     @relation(fields: [userId], references: [userId])  // Relationship with User
+
+  @@map("user_histories")
+  @@index([userId])  // Index for quick lookups based on userId
+}
+
+
+

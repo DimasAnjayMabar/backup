@@ -1,0 +1,5 @@
+1. validation (contains requirements)
+2. service (main logic of the backend)
+3. controller (controls the services, handles the requests, and returns the responses)
+4. route (create api based on the controllers)
+5. web (use the web api from the route)
