@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+import '../../../model/menu.dart';
+import '../../../utils/rive_utils.dart';
+import 'info_card.dart';
+import 'side_menu.dart';
+
+class SideBar extends StatefulWidget {
+  final Function(Menu) onMenuSelected;
+  
+  const SideBar({super.key, required this.onMenuSelected});
+
+  @override
+  State<SideBar> createState() => _SideBarState();
+}
+
+class _SideBarState extends State<SideBar> {
+  Menu selectedSideMenu = sidebarMenus.first;
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        width: 288,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          color: Color(0xFF17203A),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        child: DefaultTextStyle(
+          style: const TextStyle(color: Colors.white),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const InfoCard(
+                name: "Abu Anwar",
+                bio: "YouTuber",
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                child: Text(
+                  "Browse".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(color: Colors.white70),
+                ),
+              ),
+              ...sidebarMenus.map((menu) => SideMenu(
+                menu: menu,
+                selectedMenu: selectedSideMenu,
+                press: () {
+                  setState(() {
+                    selectedSideMenu = menu;
+                  });
+                  widget.onMenuSelected(menu);
+                },
+                // Now, SideMenu takes IconData directly, no need for riveOnInit or RiveUtils
+                icon: Icon(
+                  menu.icon,
+                  color: selectedSideMenu == menu ? Colors.blueAccent : Colors.white,
+                ),
+              )),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
+              //   child: Text(
+              //     "History".toUpperCase(),
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .titleMedium!
+              //         .copyWith(color: Colors.white70),
+              //   ),
+              // )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
