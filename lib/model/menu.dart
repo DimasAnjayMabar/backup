@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rive_animation/screens/home/debt_page.dart';
-import 'package:rive_animation/screens/home/distributor_page.dart';
-import 'package:rive_animation/screens/home/history_page.dart';
-import 'package:rive_animation/screens/home/settings_page.dart';
-import 'package:rive_animation/screens/home/warehouse_page.dart';
+import 'package:rive_animation/screens/pages/debt_page.dart';
+import 'package:rive_animation/screens/pages/distributor_page.dart';
+import 'package:rive_animation/screens/pages/history_page.dart';
+import 'package:rive_animation/screens/pages/profile_page.dart';
+import 'package:rive_animation/screens/pages/settings_page.dart';
+import 'package:rive_animation/screens/pages/warehouse_page.dart';
 
 class Menu {
   final String title;
@@ -18,27 +18,38 @@ List<Menu> sidebarMenus = [
   Menu(
     title: "Gudang",
     icon: Icons.warehouse,
-    page: WarehousePage()
+    page: const WarehousePage()
   ),
   Menu(
     title: "Distributor",
     icon: Icons.local_shipping, 
-    page: DistributorPage()
+    page: const DistributorPage()
   ),
   Menu(
     title: "Hutang",
     icon: Icons.money_off, 
-    page: DebtPage()
+    page: const DebtPage()
   ),
   Menu(
     title: "Histori Transaksi",
     icon: Icons.history, 
-    page: HistoryPage()
+    page: const HistoryPage()
   ),
+];
+
+List<Menu> sidebarMenus2= [
   Menu(
     title: "Pengaturan",
     icon: Icons.settings, 
-    page: SettingsPage()
+    page: const SettingsPage()
+  ),
+];
+
+List<Menu> sidebarMenus3 = [
+  Menu(
+    title: "Profil", 
+    icon: Icons.person, 
+    page: const ProfilePage()
   )
 ];
 // List<Menu> sidebarMenus2 = [

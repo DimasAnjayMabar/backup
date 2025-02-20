@@ -31,7 +31,7 @@ void showLoginDialog(BuildContext context, {required ValueChanged onValue}) {
               ),
             ],
           ),
-          child: Scaffold(
+          child: const Scaffold(
             // backgroundColor: Colors.transparent,
             body: Stack(
               clipBehavior: Clip.none,
@@ -39,8 +39,8 @@ void showLoginDialog(BuildContext context, {required ValueChanged onValue}) {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 40,),
-                      const Text(
+                      SizedBox(height: 40,),
+                      Text(
                         "Log In",
                         style: TextStyle(
                           fontSize: 34,
@@ -48,14 +48,14 @@ void showLoginDialog(BuildContext context, {required ValueChanged onValue}) {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         child: Text(
                           "Masukkan username dan password anda di sini",
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      const LoginForm(),
+                      LoginForm(),
                       // const Row(
                       //   children: [
                       //     Expanded(

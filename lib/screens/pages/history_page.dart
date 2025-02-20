@@ -2,19 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rive_animation/model/course.dart';
 import 'components/secondary_course_card.dart';
 
-class WarehousePage extends StatelessWidget {
-  const WarehousePage({super.key});
+class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print("sudah ditekan");
-        },
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add, color: Colors.white)
-      ),
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
@@ -50,7 +43,7 @@ class WarehousePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  "Gudang",
+                  "Histori Transaksi",
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

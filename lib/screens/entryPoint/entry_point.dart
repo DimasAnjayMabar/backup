@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:rive_animation/constants.dart';
 import 'package:rive_animation/model/menu.dart';
-import 'package:rive_animation/screens/home/home_screen.dart';
-import 'package:rive_animation/screens/home/warehouse_page.dart';
+import 'package:rive_animation/screens/pages/warehouse_page.dart';
 import 'components/menu_btn.dart';
 import 'components/side_bar.dart';
 
@@ -36,7 +35,7 @@ class _EntryPointState extends State<EntryPoint>
   late AnimationController _animationController;
   late Animation<double> scalAnimation;
   late Animation<double> animation;
-  Widget selectedPage = WarehousePage();
+  Widget selectedPage = const WarehousePage();
 
   @override
   void initState() {
@@ -123,18 +122,16 @@ class _EntryPointState extends State<EntryPoint>
             top: 16,
             child: MenuBtn(
               press: () {
-                if(isMenuOpenInput != null){
-                  if(isSideBarOpen){
-                    closeSidebar();
-                  }else{
-                    isMenuOpenInput.value = false;
-                    _animationController.forward();
-                    setState(() {
-                      isSideBarOpen = true;
-                    });
-                  }
+                if(isSideBarOpen){
+                  closeSidebar();
+                }else{
+                  isMenuOpenInput.value = false;
+                  _animationController.forward();
+                  setState(() {
+                    isSideBarOpen = true;
+                  });
                 }
-              },
+                            },
               riveOnInit: (artboard) {
                 final controller = StateMachineController.fromArtboard(
                     artboard, "State Machine");

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SecondaryCourseCard extends StatefulWidget {
   const SecondaryCourseCard({
@@ -40,7 +39,7 @@ class _SecondaryCourseCardState extends State<SecondaryCourseCard> {
                 const SizedBox(height: 4),
                 Text(
                   widget.description, 
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white60, 
                     fontSize: 16
                   ),

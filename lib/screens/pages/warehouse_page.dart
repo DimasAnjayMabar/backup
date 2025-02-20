@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:rive_animation/alert_dialog/product/add_product_alert_dialog.dart';
 import 'package:rive_animation/model/course.dart';
-import 'components/course_card.dart';
 import 'components/secondary_course_card.dart';
 
-class DistributorPage extends StatelessWidget {
-  const DistributorPage({super.key});
+class WarehousePage extends StatelessWidget {
+  const WarehousePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("sudah ditekan");
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const Dialog(
+                child: SizedBox(
+                  width: 615, // Tentukan lebar yang diinginkan
+                  height: 600, // Tentukan tinggi yang diinginkan
+                  child: AddBarang(),
+                ),
+              );
+            },
+          );
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add, color: Colors.white)
@@ -51,7 +62,7 @@ class DistributorPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  "Distributor",
+                  "Gudang",
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),

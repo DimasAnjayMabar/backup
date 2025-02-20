@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/model/course.dart';
-import 'components/course_card.dart';
 import 'components/secondary_course_card.dart';
 
 class DebtPage extends StatelessWidget {

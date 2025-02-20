@@ -1,3 +1,7 @@
+alert_dialog
+2.12
+file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/alert_dialog-1.0.2/
+file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/alert_dialog-1.0.2/lib/
 args
 3.3
 file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/args-2.6.0/
@@ -66,6 +70,10 @@ flutter_svg
 3.4
 file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.0.17/
 file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.0.17/lib/
+google_auth
+2.19
+file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/google_auth-0.0.3/
+file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/google_auth-0.0.3/lib/
 graphs
 3.4
 file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/graphs-2.3.2/

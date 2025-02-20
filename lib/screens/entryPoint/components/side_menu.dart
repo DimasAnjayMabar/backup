@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 import '../../../model/menu.dart';
 
@@ -45,7 +44,7 @@ class SideMenu extends StatelessWidget {
                 width: 36,
                 child: Icon(
                   menu.icon, // Use the IconData from the Menu class
-                  color: selectedMenu == menu ? Color(0xFF17203A) : Colors.white,
+                  color: selectedMenu == menu ? const Color(0xFF17203A) : Colors.white,
                 ),
               ),
               title: Text(
