@@ -11,6 +11,6 @@ class Port {
 
   static Future<String> getPort() async {
     String? port = await _port.read(key: "serverPort");
-    return port ?? defaultPort;  // ✅ Correctly return a valid URL
+    return port ?? localPort;  // ✅ Correctly return a valid URL
   }
 }

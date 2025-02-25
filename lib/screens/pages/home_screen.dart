@@ -24,23 +24,23 @@ class HomePage extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: courses
-                      .map(
-                        (course) => Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: CourseCard(
-                            title: course.title,
-                            iconSrc: course.iconSrc,
-                            color: course.color,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: courses
+              //         .map(
+              //           (course) => Padding(
+              //             padding: const EdgeInsets.only(left: 20),
+              //             child: CourseCard(
+              //               title: course.title,
+              //               iconSrc: course.iconSrc,
+              //               color: course.color,
+              //             ),
+              //           ),
+              //         )
+              //         .toList(),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
@@ -49,16 +49,16 @@ class HomePage extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ),
-              ...recentCourses.map((course) => Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: SecondaryCourseCard(
-                      title: course.title,
-                      description: "",
-                      iconsSrc: course.iconSrc,
-                      colorl: course.color,
-                    ),
-                  )),
+              // ...recentCourses.map((course) => Padding(
+              //       padding:
+              //           const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              //       child: SecondaryCourseCard(
+              //         title: course.title,
+              //         description: "",
+              //         iconsSrc: course.iconSrc,
+              //         colorl: course.color,
+              //       ),
+              //     )),
             ],
           ),
         ),

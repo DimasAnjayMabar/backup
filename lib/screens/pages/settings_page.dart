@@ -48,16 +48,16 @@ class SettingsPage extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ),
-              ...settingsMenu.map((course) => Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                    child: SecondaryCourseCard(
-                      title: course.title,
-                      description: course.description,
-                      iconsSrc: course.iconSrc,
-                      colorl: course.color,
-                    ),
-                  )),
+              // ...settingsMenu.map((course) => Padding(
+              //       padding:
+              //           const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              //       child: SecondaryCourseCard(
+              //         title: course.title,
+              //         description: course.description,
+              //         iconsSrc: course.iconSrc,
+              //         colorl: course.color,
+              //       ),
+              //     )),
             ],
           ),
         ),

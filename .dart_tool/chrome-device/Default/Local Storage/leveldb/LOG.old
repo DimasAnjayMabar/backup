@@ -1,4 +1,5 @@
-2025/02/18-20:52:50.372 2408 Reusing MANIFEST C:\Users\Admin\AppData\Local\Temp\flutter_tools.59a7dc05\flutter_tools_chrome_device.3251ab0\Default\Local Storage\leveldb/MANIFEST-000001
-2025/02/18-20:52:50.387 2408 Recovering log #4
-2025/02/18-20:52:50.395 2408 Reusing old log C:\Users\Admin\AppData\Local\Temp\flutter_tools.59a7dc05\flutter_tools_chrome_device.3251ab0\Default\Local Storage\leveldb/000004.log 
-2025/02/18-20:52:50.396 2408 Delete type=0 #3
+2025/02/25-10:46:22.662 17ec Reusing MANIFEST C:\Users\Admin\AppData\Local\Temp\flutter_tools.73232f7b\flutter_tools_chrome_device.30d634bd\Default\Local Storage\leveldb/MANIFEST-000001
+2025/02/25-10:46:22.678 17ec Recovering log #4
+2025/02/25-10:46:22.680 17ec (ignoring error) C:\Users\Admin\AppData\Local\Temp\flutter_tools.73232f7b\flutter_tools_chrome_device.30d634bd\Default\Local Storage\leveldb/000004.log: dropping 12656 bytes; Corruption: checksum mismatch
+2025/02/25-10:46:22.685 17ec Reusing old log C:\Users\Admin\AppData\Local\Temp\flutter_tools.73232f7b\flutter_tools_chrome_device.30d634bd\Default\Local Storage\leveldb/000004.log 
+2025/02/25-10:46:22.689 17ec Delete type=0 #3

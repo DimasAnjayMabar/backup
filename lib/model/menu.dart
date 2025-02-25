@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/screens/pages/debt_page.dart';
-import 'package:rive_animation/screens/pages/distributor_page.dart';
+import 'package:rive_animation/screens/pages/distributor_page/distributor_page.dart';
 import 'package:rive_animation/screens/pages/history_page.dart';
-import 'package:rive_animation/screens/pages/profile_page.dart';
+import 'package:rive_animation/screens/pages/profile_page/profile_page.dart';
 import 'package:rive_animation/screens/pages/settings_page.dart';
 import 'package:rive_animation/screens/pages/warehouse_page.dart';
 
