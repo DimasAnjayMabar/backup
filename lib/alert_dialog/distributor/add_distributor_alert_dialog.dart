@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rive_animation/model/course.dart';
-import 'package:rive_animation/secure_storage/port.dart';
+import 'package:rive_animation/network.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
 class AddDistributor extends StatefulWidget {
@@ -28,7 +25,7 @@ class _AddDistributorMenu extends State<AddDistributor> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        final response = await _postRequest(
+        final response = await Network.postRequest(
           'api/distributor/add-distributor',
           body: {
             'distributorName': namaDistributor,
@@ -58,21 +55,6 @@ class _AddDistributorMenu extends State<AddDistributor> {
           SnackBar(content: Text('Error: $e')),
         );
       }
-    }
-  }
-
-  Future<http.Response?> _postRequest(String endpoint, {Map<String, dynamic>? body, String? token}) async {
-    try {
-      final api = await Port.getPort();
-      final url = Uri.parse('$api/$endpoint');
-      final headers = {
-        "Content-Type": "application/json",
-        if (token != null) "Authorization": token,
-      };
-      final response = await http.post(url, headers: headers, body: body != null ? jsonEncode(body) : null);
-      return response;
-    } catch (e) {
-      return null;
     }
   }
 

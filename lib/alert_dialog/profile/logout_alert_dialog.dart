@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:rive_animation/login_page/onboarding_page/onboarding_screen.dart';
-import 'package:rive_animation/secure_storage/port.dart';
+import 'package:rive_animation/network.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
 class LogoutAlertDialog extends StatefulWidget {
@@ -19,7 +18,7 @@ class _LogoutState extends State<LogoutAlertDialog> {
     final token = await Token.getToken();
 
     if (token != null) {
-      final response = await _postRequest('api/users/logout');
+      final response = await Network.postRequest('api/users/logout');
 
       if (response != null) {
         final responseData = jsonDecode(response.body);
@@ -40,23 +39,6 @@ class _LogoutState extends State<LogoutAlertDialog> {
       } else {
         debugPrint("Logout request gagal: Tidak ada respons dari server");
       }
-    }
-  }
-
-  Future<http.Response?> _postRequest(String endpoint, {Map<String, dynamic>? body}) async {
-    try {
-      final api = await Port.getPort();
-      final token = await Token.getToken();
-      final url = Uri.parse('$api/$endpoint');
-      final headers = {
-        "Content-Type": "application/json",
-        "Authorization": "$token"
-      };
-
-      final response = await http.post(url, headers: headers, body: body != null ? jsonEncode(body) : null);
-      return response;
-    } catch (e) {
-      return null;
     }
   }
 

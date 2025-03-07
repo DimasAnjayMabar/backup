@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/alert_dialog/product/add_product_alert_dialog.dart';
-import 'package:rive_animation/model/course.dart';
-import 'components/secondary_course_card.dart';
 
 class WarehousePage extends StatelessWidget {
   const WarehousePage({super.key});

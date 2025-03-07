@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rive_animation/alert_dialog/distributor/delete_distributor_dialog.dart';
+import 'package:rive_animation/alert_dialog/distributor/edit_distributor_dialog.dart';
 
 class DistributorDetailsDialog extends StatelessWidget {
   final String distributorId;
@@ -8,13 +10,13 @@ class DistributorDetailsDialog extends StatelessWidget {
   final String ecommerceLink;
 
   const DistributorDetailsDialog({
-    Key? key,
+    super.key,
     required this.distributorId,
     required this.distributorName,
     required this.distributorEmail,
     required this.distributorPhone, 
     required this.ecommerceLink
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +34,33 @@ class DistributorDetailsDialog extends StatelessWidget {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white), 
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            showDialog(
+              context: context, 
+              builder: (BuildContext context){
+                return EditDistributorDialog(
+                  id: distributorId, 
+                  initialName: distributorName, 
+                  initialPhone: distributorPhone, 
+                  initialEmail: distributorEmail, 
+                  ecommerceLink: ecommerceLink);
+              }
+            );
+          },
           child: const Text("Edit"),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, foregroundColor: Colors.white), 
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            showDialog(
+              context: context, 
+              builder: (BuildContext context){
+                return DeleteDistributorDialog(
+                  distributorId: distributorId,
+                );
+              }
+            );
+          },
           child: const Text("Delete"),
         ),
         ElevatedButton(

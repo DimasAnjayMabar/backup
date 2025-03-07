@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive_animation/network.dart';
 import 'package:rive_animation/screens/entryPoint/entry_point.dart';
 import 'package:rive_animation/secure_storage/port.dart';
 import 'package:rive_animation/secure_storage/token.dart';
@@ -51,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
 
-    final response = await _getRequest('api/users/verify', token: token);
+    final response = await Network.getRequest('api/users/verify', token: token);
 
     if (response?.statusCode == 200) {
       _navigateToEntryPoint(delay: 2);
@@ -69,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
       errorMessage = null;
     });
 
-    final response = await _postRequest(
+    final response = await Network.postRequest(
       'api/users/login',
       body: {
         "username": _usernameController.text,
@@ -109,38 +110,6 @@ class _LoginFormState extends State<LoginForm> {
         isShowLoading = false;
       });
       print("DEBUG: Login failed with error: $errorMessage");
-    }
-  }
-
-  Future<http.Response?> _postRequest(String endpoint, {Map<String, dynamic>? body, String? token}) async {
-    try {
-      final api = await Port.getPort();
-      final url = Uri.parse('$api/$endpoint');
-      final headers = {
-        "Content-Type": "application/json",
-        if (token != null) "Authorization": token,
-      };
-
-      final response = await http.post(url, headers: headers, body: body != null ? jsonEncode(body) : null);
-      return response;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<http.Response?> _getRequest(String endpoint, {String? token}) async {
-    try {
-      final api = await Port.getPort();
-      final url = Uri.parse('$api/$endpoint');
-      final headers = {
-        "Content-Type": "application/json",
-        if (token != null) "Authorization": token,
-      };
-
-      final response = await http.get(url, headers: headers);
-      return response;
-    } catch (e) {
-      return null;
     }
   }
 

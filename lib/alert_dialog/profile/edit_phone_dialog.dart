@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive_animation/network.dart';
 import 'package:rive_animation/secure_storage/port.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
@@ -36,7 +37,7 @@ class _EditPhoneDialogState extends State<EditPhoneDialog> {
     
     setState(() => _isLoading = true);
     
-    final response = await _postRequest('/api/users/edit-phone', body: {
+    final response = await Network.postRequest('/api/users/edit-phone', body: {
       'phone': _phoneController.text,
     });
     
@@ -49,25 +50,6 @@ class _EditPhoneDialogState extends State<EditPhoneDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Gagal menyimpan nomor telepon, coba lagi.')),
       );
-    }
-  }
-
-  Future<http.Response?> _postRequest(String endpoint, {Map<String, dynamic>? body}) async {
-    try {
-      final api = await Port.getPort();
-      final token = await Token.getToken();
-      
-      if (token == null) throw Exception("Token is null");
-
-      final url = Uri.parse('$api$endpoint');
-      final headers = {
-        "Content-Type": "application/json",
-        "Authorization": token, // Ensure this is non-null
-      };
-
-      return await http.post(url, headers: headers, body: jsonEncode(body));
-    } catch (e) {
-      return null;
     }
   }
 

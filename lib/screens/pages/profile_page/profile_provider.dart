@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:rive_animation/model/course.dart';
+import 'package:rive_animation/network.dart';
 import 'package:rive_animation/secure_storage/port.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
@@ -19,16 +20,17 @@ class ProfileNotifier extends StateNotifier<List<Course>> {
   /// Fetch Profile from API
   Future<void> fetchProfile() async {
     final token = await Token.getToken();
-    final api = await Port.getPort();
-    final url = Uri.parse('$api/api/users/verify');
+    final url = Uri.parse('api/users/verify').toString();
     
     try {
-      final response = await http.get(url, headers: {
-        "Content-Type": "application/json",
-        "Authorization": token ?? "",
-      });
+      final response = await Network.getRequest(url, token: token);
 
-      if (response.statusCode == 200) {
+      // final response = await http.get(url, headers: {
+      //   "Content-Type": "application/json",
+      //   "Authorization": token ?? "",
+      // });
+
+      if (response!.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['user'];
 

@@ -26,7 +26,7 @@ class Course extends Equatable {
     Color? color,
   }) {
     return Course(
-      id: id ?? this.id,
+      id: id ?? id,
       title: title ?? this.title,
       description: description ?? this.description,
       color: color ?? this.color,
