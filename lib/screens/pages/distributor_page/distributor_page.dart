@@ -11,6 +11,7 @@ class DistributorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // to do : load distributor provider update here
     final distributors = ref.watch(distributorProvider);
     final isLoading = ref.watch(loadingProvider);
 
@@ -72,7 +73,10 @@ class DistributorPage extends ConsumerWidget {
                                     distributorName: distributorDetails['distributorName'] ?? 'Unknown',
                                     distributorEmail: distributorDetails['distributorEmail'] ?? 'No email provided',
                                     distributorPhone: distributorDetails['distributorPhone'] ?? 'No phone provided',
-                                    ecommerceLink: distributorDetails['distributorEcommerceLink'] ?? 'No link provided'
+                                    ecommerceLink: distributorDetails['distributorEcommerceLink'] ?? 'No link provided', 
+                                    onUpdated: (){
+                                      ref.read(distributorProvider.notifier).fetchDistributors();
+                                    },
                                   );
                                 },
                               );

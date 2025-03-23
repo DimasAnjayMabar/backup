@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:rive_animation/network.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
@@ -10,7 +8,7 @@ class EditDistributorDialog extends StatefulWidget {
   final String initialPhone;
   final String initialEmail;
   final String ecommerceLink;
-  // final void Function(String) onUpdated; // Callback to update UI
+  final void Function(String) onUpdated; // to do : call back to update UI
 
   const EditDistributorDialog({
     super.key, 
@@ -19,6 +17,7 @@ class EditDistributorDialog extends StatefulWidget {
     required this.initialPhone, 
     required this.initialEmail, 
     required this.ecommerceLink,
+    required this.onUpdated
   });
 
   @override
@@ -70,6 +69,7 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
     setState(() => _isLoading = false);
     
     if (response != null && response.statusCode == 200) {
+      widget.onUpdated(_emailController.text);
       const SnackBar(content: Text('Berhasil menyimpan data distributor'));
       Navigator.of(context).pop(); // Close the dialog
     } else {

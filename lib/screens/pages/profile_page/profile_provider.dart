@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:rive_animation/model/course.dart';
 import 'package:rive_animation/network.dart';
-import 'package:rive_animation/secure_storage/port.dart';
 import 'package:rive_animation/secure_storage/token.dart';
 
 /// Profile State Provider (Fetch and Manage Profile Data)

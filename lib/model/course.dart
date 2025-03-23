@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' show Color;
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'The Flutter Way',
+      title: 'Administrasi Gudang',
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFEEF1F8),
         primarySwatch: Colors.blue,

@@ -1,9 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:rive_animation/network.dart';
-import 'package:rive_animation/secure_storage/port.dart';
-import 'package:rive_animation/secure_storage/token.dart';
 
 class EditEmailDialog extends StatefulWidget {
   final String initialEmail;
