@@ -51,15 +51,32 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
   Future<void> _saveDistributorDetails(WidgetRef ref) async {
     if (!_formKey.currentState!.validate()) return;
 
+    final hasChanges =
+      _nameController.text != widget.initialName ||
+      _emailController.text != widget.initialEmail ||
+      _phoneController.text != widget.initialPhone ||
+      _linkController.text != widget.ecommerceLink;
+
+    if (!hasChanges) {
+      // No changes were made
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Tidak ada perubahan data yang disimpan.')),
+        );
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
+      return; // Exit the function without making an API call
+    }
+
     setState(() => _isLoading = true);
 
     try {
       await ref.read(distributorProvider.notifier).updateDistributors(
         widget.id,
-        _nameController.text,
-        _emailController.text,
-        _phoneController.text,
-        _linkController.text,
+        _nameController.text.isNotEmpty ? _nameController.text : widget.initialName,
+        _emailController.text.isNotEmpty ? _emailController.text : widget.initialEmail,
+        _phoneController.text.isNotEmpty ? _phoneController.text : widget.initialPhone,
+        _linkController.text.isNotEmpty ? _linkController.text : widget.ecommerceLink,
       );
 
       if (mounted) {
