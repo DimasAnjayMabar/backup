@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rive_animation/network.dart';
-import 'package:rive_animation/secure_storage/token.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rive_animation/screens/pages/distributor_page/distributor_provider.dart';
 
 class EditDistributorDialog extends StatefulWidget {
   final String id;
@@ -8,16 +8,14 @@ class EditDistributorDialog extends StatefulWidget {
   final String initialPhone;
   final String initialEmail;
   final String ecommerceLink;
-  final void Function(String) onUpdated; // to do : call back to update UI
 
   const EditDistributorDialog({
-    super.key, 
+    super.key,
     required this.id,
-    required this.initialName, 
-    required this.initialPhone, 
-    required this.initialEmail, 
+    required this.initialName,
+    required this.initialPhone,
+    required this.initialEmail,
     required this.ecommerceLink,
-    required this.onUpdated
   });
 
   @override
@@ -50,32 +48,36 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
     super.dispose();
   }
 
-  Future<void> _saveDistributorDetails() async {
+  Future<void> _saveDistributorDetails(WidgetRef ref) async {
     if (!_formKey.currentState!.validate()) return;
-    
-    final token = await Token.getToken();
-    
+
     setState(() => _isLoading = true);
-    
-    final response = await Network.putRequest('api/distributor/edit-distributor/${widget.id.toString()}', 
-    body: {
-      'distributorEmail': _emailController.text,
-      'distributorPhone': _phoneController.text,
-      'distributorName' : _nameController.text, 
-      'distributorEcommerceLink': _linkController.text
-    }, 
-    token: token);
-    
-    setState(() => _isLoading = false);
-    
-    if (response != null && response.statusCode == 200) {
-      widget.onUpdated(_emailController.text);
-      const SnackBar(content: Text('Berhasil menyimpan data distributor'));
-      Navigator.of(context).pop(); // Close the dialog
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Gagal menyimpan data distributor, coba lagi.')),
+
+    try {
+      await ref.read(distributorProvider.notifier).updateDistributors(
+        widget.id,
+        _nameController.text,
+        _emailController.text,
+        _phoneController.text,
+        _linkController.text,
       );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Berhasil menyimpan data distributor')),
+        );
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal menyimpan data distributor: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -105,7 +107,7 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _phoneController,
                 decoration: const InputDecoration(
@@ -119,7 +121,7 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -133,7 +135,7 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _linkController,
                 decoration: const InputDecoration(
@@ -160,15 +162,23 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
           onPressed: _isLoading ? null : () => Navigator.of(context).pop(),
           child: const Text('Kembali'),
         ),
-        ElevatedButton(
-          onPressed: _isLoading ? null : _saveDistributorDetails,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-          ),
-          child: _isLoading
-              ? const CircularProgressIndicator(color: Colors.white)
-              : const Text('Simpan'),
+        Consumer(
+          builder: (context, ref, child) {
+            return ElevatedButton(
+              onPressed: _isLoading
+                  ? null
+                  : () async {
+                      await _saveDistributorDetails(ref);
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+              child: _isLoading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text('Simpan'),
+            );
+          },
         ),
       ],
     );

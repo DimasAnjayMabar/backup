@@ -74,9 +74,6 @@ class DistributorPage extends ConsumerWidget {
                                     distributorEmail: distributorDetails['distributorEmail'] ?? 'No email provided',
                                     distributorPhone: distributorDetails['distributorPhone'] ?? 'No phone provided',
                                     ecommerceLink: distributorDetails['distributorEcommerceLink'] ?? 'No link provided', 
-                                    onUpdated: (){
-                                      ref.read(distributorProvider.notifier).fetchDistributors();
-                                    },
                                   );
                                 },
                               );

@@ -18,7 +18,7 @@ class _LogoutState extends State<LogoutAlertDialog> {
     final token = await Token.getToken();
 
     if (token != null) {
-      final response = await Network.postRequest('api/users/logout');
+      final response = await Network.postRequest('api/users/logout', body: null, token: token);
 
       if (response != null) {
         final responseData = jsonDecode(response.body);

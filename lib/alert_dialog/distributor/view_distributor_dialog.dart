@@ -10,7 +10,6 @@ class DistributorDetailsDialog extends ConsumerWidget {
   final String distributorEmail;
   final String distributorPhone;
   final String ecommerceLink;
-  final VoidCallback onUpdated;
 
   const DistributorDetailsDialog({
     super.key,
@@ -19,7 +18,6 @@ class DistributorDetailsDialog extends ConsumerWidget {
     required this.distributorEmail,
     required this.distributorPhone,
     required this.ecommerceLink,
-    required this.onUpdated
   });
 
   @override
@@ -58,9 +56,6 @@ class DistributorDetailsDialog extends ConsumerWidget {
                         initialPhone: distributorPhone,
                         initialEmail: distributorEmail,
                         ecommerceLink: ecommerceLink,
-                        onUpdated: (context) {
-                          ref.read(distributorProvider.notifier).fetchDistributorById(distributorId);
-                        },
                       );
                     },
                   );
@@ -68,6 +63,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
                 },
                 child: const Text("Edit"),
               ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -87,6 +83,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
                 },
                 child: const Text("Delete"),
               ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

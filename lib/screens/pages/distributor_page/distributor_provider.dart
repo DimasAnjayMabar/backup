@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rive_animation/model/course.dart';
 import 'package:rive_animation/network.dart';
@@ -14,8 +13,29 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
     fetchDistributors();
   }
 
-  void updateDistributors(List<Course> newDistributors) {
-    state = newDistributors;
+  Future <void> updateDistributors(String id, String name, String email, String phone, String link) async {
+    final token = await Token.getToken();
+    final response = await Network.putRequest('api/distributor/edit-distributor/$id', 
+      body: {
+        'distributorName' : name,
+        'distributorEmail' : email, 
+        'distributorPhone' : phone, 
+        'distributorEcommerceLink' : link
+      }, 
+      token: token
+    );
+
+    if(response != null && response.statusCode == 200){
+      state = state.map((course){
+        return course.id == id ? Course(
+          id: id,
+          title : name, 
+          description: email
+        ) : course;
+      }).toList();
+    } else {
+      throw Exception('failed to update distributor');
+    }
   }
 
   Future<void> fetchDistributors() async {

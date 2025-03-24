@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/network.dart';
+import 'package:rive_animation/secure_storage/token.dart';
 
 class EditEmailDialog extends StatefulWidget {
   final String initialEmail;
@@ -29,13 +30,18 @@ class _EditEmailDialogState extends State<EditEmailDialog> {
   }
 
   Future<void> _saveEmail() async {
+    final token = await Token.getToken();
     if (!_formKey.currentState!.validate()) return;
     
     setState(() => _isLoading = true);
     
-    final response = await Network.postRequest('/api/users/edit-email', body: {
-      'email': _emailController.text,
-    });
+    final response = await Network.postRequest(
+      'api/users/edit-email', 
+      body: {
+        'email': _emailController.text,
+      }, 
+      token: token
+    );
     
     setState(() => _isLoading = false);
     

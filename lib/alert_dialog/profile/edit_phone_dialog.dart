@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rive_animation/network.dart';
+import 'package:rive_animation/secure_storage/token.dart';
 
 class EditPhoneDialog extends StatefulWidget {
   final String initialPhone;
@@ -29,13 +30,18 @@ class _EditPhoneDialogState extends State<EditPhoneDialog> {
   }
 
   Future<void> _savePhone() async {
+    final token = await Token.getToken();
     if (!_formKey.currentState!.validate()) return;
     
     setState(() => _isLoading = true);
     
-    final response = await Network.postRequest('/api/users/edit-phone', body: {
-      'phone': _phoneController.text,
-    });
+    final response = await Network.postRequest(
+      'api/users/edit-phone', 
+      body: {
+        'phone': _phoneController.text,
+      }, 
+      token: token
+    );
     
     setState(() => _isLoading = false);
     
