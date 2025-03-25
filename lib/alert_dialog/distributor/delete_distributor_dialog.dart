@@ -1,47 +1,44 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:rive_animation/network.dart';
-import 'package:rive_animation/secure_storage/token.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../screens/pages/distributor_page/distributor_provider.dart';
 
-class DeleteDistributorDialog extends StatefulWidget {
+class DeleteDistributorDialog extends ConsumerStatefulWidget {
   final String distributorId;
-  const DeleteDistributorDialog({
-    super.key, 
-    required this.distributorId
-  });
+  const DeleteDistributorDialog({super.key, required this.distributorId});
 
   @override
-  State<DeleteDistributorDialog> createState() => _DeleteDistributorDialogState();
+  ConsumerState<DeleteDistributorDialog> createState() => _DeleteDistributorDialogState();
 }
 
-class _DeleteDistributorDialogState extends State<DeleteDistributorDialog> {
-  final bool _isLoading = false; // Untuk indikator loading
+class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialog> {
+  bool _isLoading = false;
 
   Future<void> _deleteDistributor() async {
-    final token = await Token.getToken();
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (token != null) {
-      try {
-        final response = await Network.patchRequest('api/distributor/delete-distributor/${widget.distributorId}', token: token);
-
-        if (response != null) {
-          final responseData = jsonDecode(response.body);
-          debugPrint("Delete Distributor Response: ${response.body}");
-
-          if (response.statusCode == 200) {
-            const SnackBar(content: Text('Distributor deleted successfully!'));
-            Navigator.of(context).pop();
-          } else {
-            debugPrint("Delete Distributor failed: ${responseData['message']}");
-          }
-        } else {
-          debugPrint("Delete request failed: No response from server");
-        }
-      } catch (e) {
-        debugPrint("Delete request error: $e");
+    try {
+      await ref.read(distributorProvider.notifier).deleteDistributor(widget.distributorId);
+      if (mounted) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Distributor deleted successfully!')),
+        );
       }
-    } else {
-      debugPrint("Error: No authentication token found");
+    } catch (e) {
+      debugPrint("Delete request error: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete distributor: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -56,19 +53,13 @@ class _DeleteDistributorDialogState extends State<DeleteDistributorDialog> {
           ? []
           : [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey,
-                  foregroundColor: Colors.white,
-                ),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text("Batal"),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () => _deleteDistributor(),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: _deleteDistributor,
                 child: const Text("Hapus"),
               ),
             ],

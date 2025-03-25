@@ -11,23 +11,20 @@ class DistributorPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // to do : load distributor provider update here
     final distributors = ref.watch(distributorProvider);
     final isLoading = ref.watch(loadingProvider);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
+        onPressed: () async {
+          final result = await showDialog<Course>(
             context: context,
-            builder: (BuildContext context) {
-              return AddDistributor(
-                onAdd: (Course course) {
-                  ref.read(distributorProvider.notifier).addDistributorFunction(course);
-                },
-              );
-            },
+            builder: (BuildContext context) => const AddDistributor(),
           );
+
+          if (result != null) {
+            // Optionally, no need to call anything else if dialog added it
+          }
         },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add, color: Colors.white),
@@ -59,6 +56,7 @@ class DistributorPage extends ConsumerWidget {
               else
                 Column(
                   children: distributors.map((distributor) => Padding(
+                        // to do : have to live update here when added new distributor or delete a distributor. query is based on is deleted = false
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         child: GestureDetector(
                           onTap: () async {

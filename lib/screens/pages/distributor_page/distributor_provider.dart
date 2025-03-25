@@ -10,35 +10,62 @@ final loadingProvider = StateProvider<bool>((ref) => false);
 class DistributorNotifier extends StateNotifier<List<Course>> {
   final Ref ref;
   DistributorNotifier(this.ref) : super([]) {
-    fetchDistributors();
+    fetchAllDistributors();
   }
 
-  Future <void> updateDistributors(String id, String name, String email, String phone, String link) async {
-    final token = await Token.getToken();
-    final response = await Network.putRequest('api/distributor/edit-distributor/$id', 
-      body: {
-        'distributorName' : name,
-        'distributorEmail' : email, 
-        'distributorPhone' : phone, 
-        'distributorEcommerceLink' : link
-      }, 
-      token: token
-    );
+  /*
+    to do here (and add comment every function): 
+    1. move add distributor api call
+    2. move get all distributor api call
+    3. move get distributor details api call (each id from the list get all distributor)
+    4. move edit distributor api call
+    5. move delete distributor api call
+   */
 
-    if(response != null && response.statusCode == 200){
-      state = state.map((course){
-        return course.id == id ? Course(
-          id: id,
-          title : name, 
-          description: email
-        ) : course;
-      }).toList();
-    } else {
-      throw Exception('failed to update distributor');
+  /// ✅ Add a new distributor using API and update the state
+  Future<Course?> addDistributor({
+    required String name,
+    required String phone,
+    required String email,
+    required String link,
+  }) async {
+    final token = await Token.getToken();
+    try {
+      final response = await Network.postRequest(
+        'api/distributor/add-distributor',
+        body: {
+          'distributorName': name,
+          'distributorPhone': phone,
+          'distributorEmail': email,
+          'distributorEcommerceLink': link,
+          'distributorProfilePicture': ""
+        },
+        token: token,
+      );
+
+      if (response != null && response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+        final newDistributor = responseBody['data'];
+
+        final distributor = Course(
+          id: newDistributor['distributorId'].toString(),
+          title: newDistributor['distributorName'],
+          description: newDistributor['distributorEmail'],
+        );
+
+        state = [...state, distributor];
+        return distributor;
+      } else {
+        throw Exception('Failed to add distributor');
+      }
+    } catch (e) {
+      print("❌ Error adding distributor: $e");
+      return null;
     }
   }
 
-  Future<void> fetchDistributors() async {
+  /// ✅ fetch all distributor using API 
+  Future<void> fetchAllDistributors() async {
     final token = await Token.getToken();
     final response = await Network.getRequest('api/distributor/get-all-distributor', token: token);
 
@@ -69,6 +96,7 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
     }
   }
 
+  /// ✅ fetch distributor details by id using API
   Future<Map<String, dynamic>?> fetchDistributorById(String distributorId) async {
     final token = await Token.getToken();
     final response = await Network.getRequest('api/distributor/get-distributor-details/$distributorId', token: token);
@@ -83,11 +111,43 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
     return null; // Return null if request fails
   }
 
-  void addDistributorFunction(Course course) {
-    state = [...state, Course(
-      id: course.id,
-      title: course.title,
-      description: course.description.isNotEmpty ? course.description : "No email provided",
-    )];
+  Future <void> updateDistributors(String id, String name, String email, String phone, String link) async {
+    final token = await Token.getToken();
+    final response = await Network.putRequest('api/distributor/edit-distributor/$id', 
+      body: {
+        'distributorName' : name,
+        'distributorEmail' : email, 
+        'distributorPhone' : phone, 
+        'distributorEcommerceLink' : link
+      }, 
+      token: token
+    );
+
+    if(response != null && response.statusCode == 200){
+      state = state.map((course){
+        return course.id == id ? Course(
+          id: id,
+          title : name, 
+          description: email
+        ) : course;
+      }).toList();
+    } else {
+      throw Exception('failed to update distributor');
+    }
+  }
+
+  Future<void> deleteDistributor(String id) async {
+    final token = await Token.getToken();
+    final response = await Network.patchRequest(
+      'api/distributor/delete-distributor/$id', 
+      token: token
+    );
+
+    if (response != null && response.statusCode == 200) {
+      // ✅ Update local state by removing the deleted distributor
+      state = state.where((course) => course.id != id).toList();
+    } else {
+      throw Exception('Failed to delete distributor');
+    }
   }
 }
