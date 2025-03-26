@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rive_animation/model/course.dart';
 import 'package:rive_animation/network.dart';
@@ -111,6 +112,25 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
     return null; // Return null if request fails
   }
 
+  /// ✅ delete distributor by id using API
+  Future<void> deleteDistributors(List<String> distributorIds) async {
+    final token = await Token.getToken();
+    for (var id in distributorIds) {
+      try {
+        final response = await Network.patchRequest(
+          'api/distributor/delete-distributor/$id',
+          token: token,
+        );
+        if (response != null && response.statusCode == 200) {
+          state = state.where((dist) => dist.id != id).toList();
+        }
+      } catch (e) {
+        debugPrint("Failed to delete distributor with id $id: $e");
+      }
+    }
+  }
+
+
   Future <void> updateDistributors(String id, String name, String email, String phone, String link) async {
     final token = await Token.getToken();
     final response = await Network.putRequest('api/distributor/edit-distributor/$id', 
@@ -133,21 +153,6 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
       }).toList();
     } else {
       throw Exception('failed to update distributor');
-    }
-  }
-
-  Future<void> deleteDistributor(String id) async {
-    final token = await Token.getToken();
-    final response = await Network.patchRequest(
-      'api/distributor/delete-distributor/$id', 
-      token: token
-    );
-
-    if (response != null && response.statusCode == 200) {
-      // ✅ Update local state by removing the deleted distributor
-      state = state.where((course) => course.id != id).toList();
-    } else {
-      throw Exception('Failed to delete distributor');
     }
   }
 }

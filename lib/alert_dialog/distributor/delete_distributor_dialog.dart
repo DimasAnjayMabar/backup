@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../screens/pages/distributor_page/distributor_provider.dart';
 
 class DeleteDistributorDialog extends ConsumerStatefulWidget {
-  final String distributorId;
-  const DeleteDistributorDialog({super.key, required this.distributorId});
+  final List<String> distributorIds; // Now accepts a list of IDs
+  const DeleteDistributorDialog({super.key, required this.distributorIds});
 
   @override
   ConsumerState<DeleteDistributorDialog> createState() => _DeleteDistributorDialogState();
@@ -13,24 +13,24 @@ class DeleteDistributorDialog extends ConsumerStatefulWidget {
 class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialog> {
   bool _isLoading = false;
 
-  Future<void> _deleteDistributor() async {
+  Future<void> _deleteDistributors() async {
     setState(() {
       _isLoading = true;
     });
 
     try {
-      await ref.read(distributorProvider.notifier).deleteDistributor(widget.distributorId);
+      await ref.read(distributorProvider.notifier).deleteDistributors(widget.distributorIds);
       if (mounted) {
         Navigator.popUntil(context, (route) => route.isFirst);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Distributor deleted successfully!')),
+          SnackBar(content: Text('${widget.distributorIds.length} distributor(s) deleted successfully!')),
         );
       }
     } catch (e) {
       debugPrint("Delete request error: $e");
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete distributor: $e')),
+          SnackBar(content: Text('Failed to delete distributor(s): $e')),
         );
       }
     } finally {
@@ -48,7 +48,7 @@ class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialo
       title: const Text("Konfirmasi Penghapusan"),
       content: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : const Text("Apakah Anda yakin ingin menghapus distributor?"),
+          : Text("Apakah Anda yakin ingin menghapus ${widget.distributorIds.length} distributor(s)?"),
       actions: _isLoading
           ? []
           : [
@@ -59,7 +59,7 @@ class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialo
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: _deleteDistributor,
+                onPressed: _deleteDistributors,
                 child: const Text("Hapus"),
               ),
             ],

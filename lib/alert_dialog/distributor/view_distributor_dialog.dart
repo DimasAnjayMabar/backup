@@ -75,7 +75,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return DeleteDistributorDialog(
-                        distributorId: distributorId,
+                        distributorIds: [distributorId],
                       );
                     },
                   );

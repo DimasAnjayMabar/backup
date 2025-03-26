@@ -131,12 +131,12 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   labelText: 'Nomor Telepon',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Masukkan nomor baru';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Masukkan nomor baru';
+                //   }
+                //   return null;
+                // },
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -145,12 +145,12 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   labelText: 'Email',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Masukkan email baru';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Masukkan email baru';
+                //   }
+                //   return null;
+                // },
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -159,12 +159,12 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
                   labelText: 'Link',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Masukkan link baru';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Masukkan link baru';
+                //   }
+                //   return null;
+                // },
               ),
             ],
           ),
