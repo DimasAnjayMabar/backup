@@ -83,7 +83,8 @@ class _EditDistributorDialogState extends State<EditDistributorDialog> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Berhasil menyimpan data distributor')),
         );
-        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pop(context);
+        Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {

@@ -10,6 +10,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
   final String distributorEmail;
   final String distributorPhone;
   final String ecommerceLink;
+  final VoidCallback onEditTap;
 
   const DistributorDetailsDialog({
     super.key,
@@ -18,6 +19,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
     required this.distributorEmail,
     required this.distributorPhone,
     required this.ecommerceLink,
+    required this.onEditTap
   });
 
   @override
@@ -45,22 +47,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () async {
-                  ref.read(loadingProvider.notifier).state = true;
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return EditDistributorDialog(
-                        id: distributorId,
-                        initialName: distributorName,
-                        initialPhone: distributorPhone,
-                        initialEmail: distributorEmail,
-                        ecommerceLink: ecommerceLink,
-                      );
-                    },
-                  );
-                  ref.read(loadingProvider.notifier).state = false;
-                },
+                onPressed: onEditTap,
                 child: const Text("Edit"),
               ),
               const SizedBox(height: 10),

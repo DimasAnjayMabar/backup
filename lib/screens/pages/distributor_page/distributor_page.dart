@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rive_animation/alert_dialog/distributor/add_distributor_alert_dialog.dart';
 import 'package:rive_animation/alert_dialog/distributor/delete_distributor_dialog.dart';
+import 'package:rive_animation/alert_dialog/distributor/edit_distributor_dialog.dart';
 import 'package:rive_animation/alert_dialog/distributor/view_distributor_dialog.dart';
 import 'package:rive_animation/model/course.dart';
 import 'package:rive_animation/screens/pages/components/third_course_card.dart';
@@ -185,15 +186,29 @@ class _DistributorPageState extends ConsumerState<DistributorPage>{
                                                 .fetchDistributorById(distributor.id.toString());
 
                                             if (distributorDetails != null) {
+                                              final rootContext = context;
                                               showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
+                                                context: rootContext,
+                                                builder: (BuildContext dialogContext) {
                                                   return DistributorDetailsDialog(
                                                     distributorId: distributorDetails['distributorId'].toString(),
                                                     distributorName: distributorDetails['distributorName'] ?? 'Unknown',
                                                     distributorEmail: distributorDetails['distributorEmail'] ?? 'No email provided',
                                                     distributorPhone: distributorDetails['distributorPhone'] ?? 'No phone provided',
                                                     ecommerceLink: distributorDetails['distributorEcommerceLink'] ?? 'No link provided',
+                                                    onEditTap : () async {
+                                                      Navigator.pop(dialogContext);
+                                                      await Future.delayed(const Duration(milliseconds: 150));
+
+                                                      showDialog(
+                                                        context: rootContext, 
+                                                        builder: (_) => EditDistributorDialog(
+                                                          id: distributorDetails['distributorId'].toString(), 
+                                                          initialName: distributorDetails['distributorName'], 
+                                                          initialPhone: distributorDetails['distributorPhone'], 
+                                                          initialEmail: distributorDetails['distributorEmail'], 
+                                                          ecommerceLink: distributorDetails['distributorEcommerceLink']));
+                                                    }
                                                   );
                                                 },
                                               );
