@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rive_animation/screens/pages/distributor_page/distributor_provider.dart';
 
 // Helper untuk responsivitas
 class ResponsiveHelper {
@@ -47,15 +49,14 @@ class TableRowData {
   });
 }
 
-class AddBarang extends StatefulWidget {
+class AddBarang extends ConsumerStatefulWidget {
   const AddBarang({super.key});
 
   @override
-  State<AddBarang> createState() => _AddBarangState();
+  ConsumerState<AddBarang> createState() => _AddBarangState();
 }
 
-class _AddBarangState extends State<AddBarang> {
-  List<String> distributorList = [];
+class _AddBarangState extends ConsumerState<AddBarang> {
   List<String> categoryList = [];
   String selectedDistributor = '';
   DateTime selectedDate = DateTime.now();
@@ -84,9 +85,7 @@ class _AddBarangState extends State<AddBarang> {
   @override
   void initState() {
     super.initState();
-    // fetchDistributorDropdown();
-    // fetchCategoryDropdown();
-    addRow(); // Tambahkan row default saat pertama kali
+    addRow();
   }
 
   String _formatCurrency(String rawValue) {
@@ -107,80 +106,6 @@ class _AddBarangState extends State<AddBarang> {
     int value = int.parse(rawValue);
     return "$value%";
   }
-
-  // Future<void> fetchDistributorDropdown() async {
-  //   try {
-  //     // Ambil data konfigurasi database dan password
-  //     final db = await StorageService.getDatabaseIdentity();
-  //     final password = await StorageService.getPassword();
-
-  //     // Kirim request POST ke endpoint /distributors
-  //     final response = await http.post(
-  //       Uri.parse('http://${db['serverIp']}:3000/distributors'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: json.encode({
-  //         'server_ip': db['serverIp'],
-  //         'server_username': db['serverUsername'],
-  //         'server_password': password,
-  //         'server_database': db['serverDatabase'],
-  //       }),
-  //     );
-
-  //     // Periksa status respons
-  //     if (response.statusCode == 200) {
-  //       final body = json.decode(response.body); // Decode JSON respons
-
-  //       // Ambil daftar distributor dari JSON
-  //       final distributors = body['distributors'] ?? [];
-  //       setState(() {
-  //         distributorList = List<String>.from(
-  //           distributors.map((distributor) => distributor['distributor_name']),
-  //         );
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load distributors: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     // Tangkap dan tampilkan error
-  //     print('Error fetching distributors: $e');
-  //   }
-  // }
-
-  // Future<void> fetchCategoryDropdown() async {
-  //   try {
-  //     final db = await StorageService.getDatabaseIdentity();
-  //     final password = await StorageService.getPassword();
-
-  //     final response = await http.post(
-  //       Uri.parse('http://${db['serverIp']}:3000/categories'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: json.encode({
-  //         'server_ip': db['serverIp'],
-  //         'server_username': db['serverUsername'],
-  //         'server_password': password,
-  //         'server_database': db['serverDatabase'],
-  //       }),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final body = json.decode(response.body);
-  //       final categories = body['categories'] ?? [];
-  //       setState(() {
-  //         categoryList = List<String>.from(
-  //           categories.map((category) => category['category_name']),
-  //         );
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load categories: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching categories: $e');
-  //   }
-  // }
 
   void addRow() {
     setState(() {
@@ -224,65 +149,9 @@ class _AddBarangState extends State<AddBarang> {
     return rawValue.isEmpty ? '0' : rawValue;
   }
 
-  // Future<void> addProduct() async {
-  //   try {
-  //     final db = await StorageService.getDatabaseIdentity();
-  //     final password = await StorageService.getPassword();
-  //     List<TempAddBarang> productsList = await TempAddBarang.getProducts();
-  //     final transaction = await TempAddTransaction.getTransaction();
-
-  //     // Data transaksi yang tidak berubah (tidak perlu loop)
-  //     final transactionPayload = {
-  //       'server_ip': db['serverIp'],
-  //       'server_username': db['serverUsername'],
-  //       'server_password': password,
-  //       'server_database': db['serverDatabase'],
-  //       'transaction_date': transaction?.selectedDate ?? '',
-  //       'distributor_name': transaction?.selectedDistributor ?? '',
-  //       'total_paid': transaction?.totalPaid ?? 0.0,
-  //     };
-
-  //     for (TempAddBarang product in productsList) {
-  //       // Payload khusus untuk setiap produk
-  //       final productPayload = {
-  //         'product_name': product.productName,  // Mengakses atribut produk
-  //         'subtotal': product.buyPrice,
-  //         'product_stock': product.stock,
-  //         'percent_profit': product.percentProfit,
-  //         'category_name': product.category,
-  //       };
-
-  //       // Gabungkan payload transaksi dan produk
-  //       final combinedPayload = {
-  //         ...transactionPayload,  // Menambahkan data transaksi
-  //         ...productPayload,      // Menambahkan data produk
-  //       };
-
-  //       // Lakukan request ke API
-  //       final response = await http.post(
-  //         Uri.parse('http://${db['serverIp']}:3000/new-product'),
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: json.encode(combinedPayload), // Gabungkan dan kirim payload
-  //       );
-
-  //       // Tangani response
-  //       if (response.statusCode == 200) {
-  //         print('Product added successfully!');
-  //       } else {
-  //         print('Failed to add product: ${response.body}');
-  //       }
-  //     }
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Error: $e')),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
+    final distributors = ref.watch(distributorProvider);
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
       child: Scaffold(
@@ -309,10 +178,18 @@ class _AddBarangState extends State<AddBarang> {
                         fontSize: fontSize,
                         fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: () => selectDate(context),
-                    icon: const Icon(Icons.calendar_today, color: Colors.black),
-                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200, // ✅ Background
+                      borderRadius: BorderRadius.circular(8), // ✅ Rounded corners
+                    ),
+                    // padding: const EdgeInsets.all(8), // ✅ Inner padding
+                    margin: const EdgeInsets.only(left: 5),
+                    child: IconButton(
+                      onPressed: () => selectDate(context),
+                      icon: const Icon(Icons.calendar_today, color: Colors.blue),
+                    ),
+                  )
                 ],
               ),
               const SizedBox(height: 10),
@@ -339,14 +216,10 @@ class _AddBarangState extends State<AddBarang> {
                         ),
                       ),
                       dropdownColor: Colors.white,
-                      items: distributorList.map((distributor) {
-                        return DropdownMenuItem<String>(
-                          value: distributor,
-                          child: Text(distributor,
-                              style: TextStyle(
-                                  fontSize: fontSize, color: Colors.black)),
-                        );
-                      }).toList(),
+                      items: distributors.map((distributor) => DropdownMenuItem(
+                        value: distributor.id.toString(),
+                        child: Text(distributor.title),
+                      )).toList(),
                       onChanged: (value) {
                         setState(() {
                           selectedDistributor = value ?? '';
@@ -616,65 +489,8 @@ class _AddBarangState extends State<AddBarang> {
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(
-                    onPressed: () async {
-                      // VerifyProductCreate.showExitPopup(context, () async {
-                      //   try {
-                      //     // Simpan semua data produk ke secure storage
-                      //     List<TempAddBarang> products = [];
-
-                      //     for (TableRowData row in rowDataList) {
-                      //       TempAddBarang temp = TempAddBarang(
-                      //         productName: row.name,
-                      //         buyPrice: row.buyPrice,
-                      //         stock: row.stock,
-                      //         percentProfit: row.percentProfit,
-                      //         category: row.category,
-                      //       );
-
-                      //       // Tambahkan setiap produk ke dalam list
-                      //       products.add(temp);
-                      //     }
-
-                      //     // Simpan semua produk yang ada dalam list ke secure storage
-                      //     await TempAddBarang.saveProducts(products);
-
-                      //     // Simpan data transaksi ke secure storage
-                      //     TempAddTransaction transaction = TempAddTransaction(
-                      //       selectedDistributor: selectedDistributor,
-                      //       selectedDate: selectedDate.toIso8601String(),
-                      //       totalPaid: totalPaid ?? 0.0,
-                      //     );
-
-                      //     await TempAddTransaction.saveTransaction(transaction);
-
-                      //     // Panggil addProduct untuk menyimpan data ke server
-                      //     await addProduct();
-
-                      //     // Tampilkan pesan berhasil
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       const SnackBar(content: Text("Data berhasil disimpan ke server!")),
-                      //     );
-                      //     // Jika ada error, cetak data dari secure storage ke konsol
-                      //     final tempAddBarang = await TempAddBarang.getProducts();
-                      //     final tempAddTransaction = await TempAddTransaction.getTransaction();
-
-                      //     print("TempAddBarang: $tempAddBarang");
-                      //     print("TempAddTransaction: $tempAddTransaction");
-                      //   } catch (e) {
-                      //     // Jika ada error, cetak data dari secure storage ke konsol
-                      //     final tempAddBarang = await TempAddBarang.getProducts();
-                      //     final tempAddTransaction = await TempAddTransaction.getTransaction();
-
-                      //     print("Error: $e");
-                      //     print("TempAddBarang: $tempAddBarang");
-                      //     print("TempAddTransaction: $tempAddTransaction");
-
-                      //     // Tampilkan pesan error
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       SnackBar(content: Text("Error: $e")),
-                      //     );
-                      //   }
-                      // });
+                    onPressed: () {
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
