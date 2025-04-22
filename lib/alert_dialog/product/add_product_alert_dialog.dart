@@ -151,7 +151,7 @@ class _AddBarangState extends ConsumerState<AddBarang> {
 
   @override
   Widget build(BuildContext context) {
-    final distributors = ref.watch(distributorProvider);
+    final distributors = ref.watch(distributorProvider); //the output is a class of course
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
       child: Scaffold(

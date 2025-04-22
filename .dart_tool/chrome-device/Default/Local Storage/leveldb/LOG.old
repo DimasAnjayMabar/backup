@@ -1,6 +1,9 @@
-2025/04/17-11:36:06.963 1f14 Reusing MANIFEST C:\Users\Admin\AppData\Local\Temp\flutter_tools.d463b8e0\flutter_tools_chrome_device.c18d5b7\Default\Local Storage\leveldb/MANIFEST-000001
-2025/04/17-11:36:06.982 1f14 Recovering log #4
-2025/04/17-11:36:06.983 1f14 (ignoring error) C:\Users\Admin\AppData\Local\Temp\flutter_tools.d463b8e0\flutter_tools_chrome_device.c18d5b7\Default\Local Storage\leveldb/000004.log: dropping 26192 bytes; Corruption: checksum mismatch
-2025/04/17-11:36:06.983 1f14 (ignoring error) C:\Users\Admin\AppData\Local\Temp\flutter_tools.d463b8e0\flutter_tools_chrome_device.c18d5b7\Default\Local Storage\leveldb/000004.log: dropping 203 bytes; Corruption: missing start of fragmented record(2)
-2025/04/17-11:36:06.994 1f14 Reusing old log C:\Users\Admin\AppData\Local\Temp\flutter_tools.d463b8e0\flutter_tools_chrome_device.c18d5b7\Default\Local Storage\leveldb/000004.log 
-2025/04/17-11:36:07.010 1f14 Delete type=0 #3
+2025/04/17-11:53:14.077 3a3c Reusing MANIFEST C:\Users\Admin\AppData\Local\Temp\flutter_tools.4939d999\flutter_tools_chrome_device.e7eddffc\Default\Local Storage\leveldb/MANIFEST-000001
+2025/04/17-11:53:14.091 3a3c Recovering log #4
+2025/04/17-11:53:14.092 3a3c (ignoring error) C:\Users\Admin\AppData\Local\Temp\flutter_tools.4939d999\flutter_tools_chrome_device.e7eddffc\Default\Local Storage\leveldb/000004.log: dropping 26192 bytes; Corruption: checksum mismatch
+2025/04/17-11:53:14.092 3a3c (ignoring error) C:\Users\Admin\AppData\Local\Temp\flutter_tools.4939d999\flutter_tools_chrome_device.e7eddffc\Default\Local Storage\leveldb/000004.log: dropping 203 bytes; Corruption: missing start of fragmented record(2)
+2025/04/17-11:53:14.097 3a3c Reusing old log C:\Users\Admin\AppData\Local\Temp\flutter_tools.4939d999\flutter_tools_chrome_device.e7eddffc\Default\Local Storage\leveldb/000004.log 
+2025/04/17-11:53:14.099 3a3c Delete type=0 #3
+2025/04/17-12:05:32.875 17f0 Level-0 table #8: started
+2025/04/17-12:05:32.887 17f0 Level-0 table #8: 13663 bytes OK
+2025/04/17-12:05:32.895 17f0 Delete type=0 #4

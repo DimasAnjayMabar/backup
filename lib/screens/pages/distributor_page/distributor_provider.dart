@@ -14,14 +14,11 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
     fetchAllDistributors();
   }
 
-  /*
-    to do here (and add comment every function): 
-    1. move add distributor api call
-    2. move get all distributor api call
-    3. move get distributor details api call (each id from the list get all distributor)
-    4. move edit distributor api call
-    5. move delete distributor api call
-   */
+  /* 
+  ========================================================================================================================
+  DISTRIBUTOR
+  ========================================================================================================================
+  */ 
 
   /// ✅ Add a new distributor using API and update the state
   Future<Course?> addDistributor({
@@ -155,4 +152,23 @@ class DistributorNotifier extends StateNotifier<List<Course>> {
       throw Exception('failed to update distributor');
     }
   }
+
+  
+  /* 
+  ========================================================================================================================
+  WAREHOUSE API CALL
+  ========================================================================================================================
+  */ 
+
+  //to do : create new product validation ->  service -> controller -> route
+
+  //create
+
+  //fetch all product
+
+  //fetch product by id
+
+  //edit product
+
+  //delete product
 }
