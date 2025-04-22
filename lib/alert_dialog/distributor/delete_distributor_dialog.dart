@@ -21,7 +21,7 @@ class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialo
     try {
       await ref.read(distributorProvider.notifier).deleteDistributors(widget.distributorIds);
       if (mounted) {
-        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('${widget.distributorIds.length} distributor(s) deleted successfully!')),
         );
@@ -48,7 +48,7 @@ class _DeleteDistributorDialogState extends ConsumerState<DeleteDistributorDialo
       title: const Text("Konfirmasi Penghapusan"),
       content: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Text("Apakah Anda yakin ingin menghapus ${widget.distributorIds.length} distributor(s)?"),
+          : Text("Apakah Anda yakin ingin menghapus ${widget.distributorIds.length} distributor?"),
       actions: _isLoading
           ? []
           : [

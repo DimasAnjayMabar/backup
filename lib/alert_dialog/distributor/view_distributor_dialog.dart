@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rive_animation/alert_dialog/distributor/delete_distributor_dialog.dart';
-import 'package:rive_animation/alert_dialog/distributor/edit_distributor_dialog.dart';
 import 'package:rive_animation/screens/pages/distributor_page/distributor_provider.dart';
 
 class DistributorDetailsDialog extends ConsumerWidget {
@@ -11,6 +9,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
   final String distributorPhone;
   final String ecommerceLink;
   final VoidCallback onEditTap;
+  final VoidCallback onDeleteTap;
 
   const DistributorDetailsDialog({
     super.key,
@@ -19,7 +18,8 @@ class DistributorDetailsDialog extends ConsumerWidget {
     required this.distributorEmail,
     required this.distributorPhone,
     required this.ecommerceLink,
-    required this.onEditTap
+    required this.onEditTap,
+    required this.onDeleteTap
   });
 
   @override
@@ -56,18 +56,7 @@ class DistributorDetailsDialog extends ConsumerWidget {
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () async {
-                  ref.read(loadingProvider.notifier).state = true;
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return DeleteDistributorDialog(
-                        distributorIds: [distributorId],
-                      );
-                    },
-                  );
-                  ref.read(loadingProvider.notifier).state = false;
-                },
+                onPressed: onDeleteTap,
                 child: const Text("Delete"),
               ),
               const SizedBox(height: 10),

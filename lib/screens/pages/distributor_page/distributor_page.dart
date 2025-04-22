@@ -208,7 +208,16 @@ class _DistributorPageState extends ConsumerState<DistributorPage>{
                                                           initialPhone: distributorDetails['distributorPhone'], 
                                                           initialEmail: distributorDetails['distributorEmail'], 
                                                           ecommerceLink: distributorDetails['distributorEcommerceLink']));
-                                                    }
+                                                    }, 
+                                                    onDeleteTap: () async {
+                                                      Navigator.pop(dialogContext);
+                                                      await Future.delayed(const Duration(microseconds: 150));
+
+                                                      showDialog(
+                                                        context: context, 
+                                                        builder: (_) => DeleteDistributorDialog(distributorIds: [distributorDetails['distributorId'].toString()])
+                                                      );
+                                                    },
                                                   );
                                                 },
                                               );
